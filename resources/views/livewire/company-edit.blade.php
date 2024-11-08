@@ -33,7 +33,10 @@
                                         <i class="bi bi-arrow-repeat"></i>Refresh</a>
                                 </div>
                             </div>
-                            <div class="card-title">Edit Profil Perusahaan</div>
+                            <div class="card-title">Edit Profil Perusahaan
+                                <a class="btn text-bg-primary btn-sm rounded" wire:navigate href="{{ url('perusahaan/') }}">
+                                    <i class="fas fa-arrow-left"></i></a>
+                            </div>
                         </div>
                         <div x-show="panduan" x-transition x-on:click.outside="panduan = false">
                             <hr>
@@ -119,32 +122,32 @@
                             <hr>
                             <form wire:submit.prevent="addnomorsk()">
                                 <div class="mb-2">
-                                    <label for="nomorsk">Masukan Nomor SK</label>
-                                    <input type="text" id="nomorsk" class="form-control @error('nomorsk') is-invalid @enderror" wire:model="nomorsk" required>
+                                    <label for="nomor">Masukan Nomor SK</label>
+                                    <input type="text" id="nomor" class="form-control @error('nomor') is-invalid @enderror" wire:model="nomor" required>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Tambah SK</button>
                             </form>
                         </div>
                         <div class="list-group mt-4">
-                            @foreach ($nomorsks as $nomor)
+                            @foreach ($nomorsks as $n)
                                 @php
-                                    $nomor['tahapan'] = App\Models\Tahapan::where('id', $nomor->tahapan_id)->first();
+                                    $n['tahapan'] = App\Models\Tahapan::where('id', $n->tahapan_id)->first();
                                 @endphp
                                 <div class="list-group-item list-group-item-action" x-data="{ hapus: false }">
-                                    {{ $loop->iteration }}. Nomor SK : {{ $nomor->nomorsk }}
-                                    <a href="#" class="ms-2"><i class="fas fa-edit"></i> Edit</a>
+                                    {{ $loop->iteration }}. Nomor SK : {{ $n->nomor }}
+                                    <a wire:navigate href="{{ url('nomorsk/' . $n->id) }}" class="ms-2"><i class="fas fa-edit"></i> Edit</a>
                                     <span @click="hapus = !hapus" @click.outside="hapus = false" class="badge text-bg-danger hapus"><i class="fas fa-trash"></i> Hapus</span>
                                     <div x-show="hapus" class="position-absolute bg-warning p-2 rounded px-3" style="right: 10px;">
-                                        <span class="hapus" wire:click="hapusnomorsk({{ $nomor->id }})">Ya, hapus</span> | <span class="hapus">Batal</span>
+                                        <span class="hapus" wire:click="hapusnomorsk({{ $n->id }})">Ya, hapus</span> | <span class="hapus">Batal</span>
                                     </div>
                                 </div>
                                 <div class="ms-4 mt-1 mb-4">
                                     <span class="badge text-bg-primary"> Masa Berlaku :
-                                        {{ date('d-m-Y', strtotime($nomor->tgl_mulai)) }} s.d.
-                                        {{ date('d-m-Y', strtotime($nomor->tgl_selesai)) }}
+                                        {{ date('d-m-Y', strtotime($n->tgl_mulai)) }} s.d.
+                                        {{ date('d-m-Y', strtotime($n->tgl_selesai)) }}
                                     </span> <br>
-                                    Tahapan IUP : {{ $nomor['tahapan']['name_tahapan'] }} | Lokasi : {{ $nomor->kabupaten }}, {{ $nomor->kecamatan }}, {{ $nomor->desa }}
-                                    <br> Luas (HA) : {{ $nomor->luasha }} | Alamat sesuai SK : {{ $nomor->alamat }}
+                                    Tahapan IUP : {{ $n['tahapan']['name_tahapan'] }} | Lokasi : {{ $n->kabupaten }}, {{ $n->kecamatan }}, {{ $n->desa }}
+                                    <br> Luas (HA) : {{ $n->luasha }} | Alamat sesuai SK : {{ $n->alamat }}
                                 </div>
                             @endforeach
                         </div>
@@ -153,3 +156,4 @@
             </div>
         </div>
     </div>
+</div>

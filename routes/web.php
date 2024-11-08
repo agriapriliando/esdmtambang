@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Livewire\Companies;
 use App\Livewire\CompanyEdit;
+use App\Livewire\NomorskEdit;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::get('logout', function () {
 });
 Route::get('perusahaan', Companies::class);
 Route::get('perusahaan/{id}', CompanyEdit::class);
+Route::get('nomorsk/{id}', NomorskEdit::class);
 
 
 Route::get('berkas', function () {
