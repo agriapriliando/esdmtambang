@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('email', 20)->unique()->nullable();
             $table->longText('catatan')->nullable();
             $table->string('company_code')->nullable();
-            $table->integer('limit_share')->nullable();
-            $table->boolean('password_use')->default(0);
+            $table->integer('limit_share')->default(0);
+            $table->boolean('password_active')->default(0);
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();

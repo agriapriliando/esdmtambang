@@ -36,6 +36,6 @@ class ComoditySeeder extends Seeder
             array("name_commodity" => "Tanah Urug", "notes_commodity" => "", "group" => "BATUAN"),
             array("name_commodity" => "Pasir Laut", "notes_commodity" => "", "group" => "BATUAN")
         );
-        DB::table('commodities')->insert($array);
+        DB::table('comodities')->insert($array);
     }
 }

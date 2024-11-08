@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('comodities_companies', function (Blueprint $table) {
             $table->id();
-            $table->integer('comodity_id')->unsigned();
-            $table->integer('company_id')->unsigned();
+            $table->foreignId('comodity_id')->constrained()->onDelete('cascade');
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('comodity_id')->references('id')->on('comodities')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique();
+            $table->string('nohp', 30);
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role', 20)->default('pemohon'); // superadmin, admin, pemohon, nonaktif, disposisi
             $table->rememberToken();
             $table->timestamps();
         });
