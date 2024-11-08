@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{ $title ?? 'Bid. Tambang ESDM' }}</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('') }}assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="{{ asset('') }}assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -21,7 +21,7 @@
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["assets/css/fonts.min.css"],
+                urls: ["{{ asset('assets/css/fonts.min.css') }}"],
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -30,10 +30,10 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
+    <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ asset('') }}assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="{{ asset('') }}assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="{{ asset('') }}assets/css/custom.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,7 +47,7 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="index.html" class="logo">
-                        <img src="assets/logo_top_esdm_kalteng.png" alt="navbar brand" class="navbar-brand" height="60" />
+                        <img src="{{ asset('') }}assets/logo_top_esdm_kalteng.png" alt="navbar brand" class="navbar-brand" height="60" />
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -205,6 +205,7 @@
             </div>
 
             @yield('content')
+            {{ $slot }}
 
             <div class="text-center">
                 <img src="assets/logo_kotak.png" alt="navbar brand" class="navbar-brand" height="40" />
@@ -216,22 +217,21 @@
     </div>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+    <script src="{{ asset('') }}assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="{{ asset('') }}assets/js/core/popper.min.js"></script>
+    <script src="{{ asset('') }}assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="{{ asset('') }}assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="{{ asset('') }}assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- Sweet Alert -->
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="{{ asset('') }}assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="{{ asset('') }}assets/js/kaiadmin.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>

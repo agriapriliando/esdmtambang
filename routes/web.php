@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Livewire\Companies;
+use App\Livewire\CompanyEdit;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +27,10 @@ Route::get('logout', function () {
     Http::post('http://127.0.0.1:8000/api/logout');
     return redirect('login')->with('success', 'Anda Berhasil Logout');
 });
-Route::get('perusahaan', function () {
-    return view('perusahaan');
-});
+Route::get('perusahaan', Companies::class);
+Route::get('perusahaan/{id}', CompanyEdit::class);
+
+
 Route::get('berkas', function () {
     return view('berkas');
 })->name('berkas');

@@ -15,6 +15,10 @@ class TahapanSeeder extends Seeder
     {
         $dataTahapan = [
             [
+                "name_tahapan" => "Pilih Tahapan IUP",
+                "desc_tahapan" => "Pilih Tahapan IUP",
+            ],
+            [
                 "name_tahapan" => "Operasi Produksi",
                 "desc_tahapan" => "Operasi Produksi",
             ],

@@ -16,6 +16,7 @@ class CompanySeeder extends Seeder
         DB::table('companies')->insert([
             [
                 'name_company' => 'PT. Berkat Sejahtera Abadi',
+                'name_kontak' => 'Andi Setiawan',
                 'kontak' => '081234567890',
                 'email' => 'a@a.com',
                 'catatan' => 'Isi Catatan',
@@ -29,6 +30,7 @@ class CompanySeeder extends Seeder
             ],
             [
                 'name_company' => 'CV. Makmur Sentosa Mulia',
+                'name_kontak' => 'Danar Cahyono',
                 'kontak' => '081234567888',
                 'email' => 'b@b.com',
                 'catatan' => 'Isi Catatan',
