@@ -216,7 +216,7 @@
                                                                         <div class="mb-2">
                                                                             <p class="m-0 fw-bold">Surat Keputusan {{ $loop->iteration }}</p>
                                                                             <div class="d-md-flex mt-1 mb-2">
-                                                                                <input type="text" id="nomorsk" class="form-control me-1" value="{{ $nomorsk->nomorsk }}" disabled>
+                                                                                <input type="text" id="nomorsk" class="form-control me-1" value="{{ $nomorsk->nomor }}" disabled>
                                                                                 <input style="width: 200px" type="date" class="form-control me-1" value="{{ $nomorsk->tgl_mulai }}" disabled>
                                                                                 <input style="width: 200px" type="date" class="form-control me-1" value="{{ $nomorsk->tgl_selesai }}" disabled>
                                                                             </div>

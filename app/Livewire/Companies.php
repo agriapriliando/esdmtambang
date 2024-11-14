@@ -10,7 +10,7 @@ class Companies extends Component
     public function render()
     {
         return view('livewire.companies', [
-            'companies' => Company::with('nomorsks')->limit(1)->get(),
+            'companies' => Company::with('nomorsks')->get(),
         ]);
     }
 }

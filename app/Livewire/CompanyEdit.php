@@ -25,8 +25,9 @@ class CompanyEdit extends Component
     public $is_active;
 
     // public $nomorsks; // untuk list nomor
-
-    public $nomorsk; // untuk tambah nomor sk
+    #[Validate('required', message: 'Nomor SK harus diisi..')]
+    #[Validate('unique:nomorsks,nomor', message: 'Nomor SK Telah Terdaftar')]
+    public $nomor; // untuk tambah nomor sk
 
     public function updatedEmail()
     {
@@ -43,18 +44,19 @@ class CompanyEdit extends Component
     public function addnomorsk()
     {
         $this->validate([
-            'nomorsk' => 'required',
+            'nomor' => 'required|unique:nomorsks,nomor',
         ]);
 
         Nomorsk::create([
-            'nomorsk' => $this->nomorsk,
+            'nomor' => $this->nomor,
             'company_id' => $this->id,
             'tahapan_id' => 1,
-            'region_id' => "62"
+            'region_id' => "62",
+            'provinsi' => "KALIMANTAN TENGAH",
         ]);
 
         session()->flash('success', 'Nomor SK Berhasil Ditambahkan');
-        $this->nomorsk = '';
+        $this->nomor = '';
     }
 
     public function hapusnomorsk($id)

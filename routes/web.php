@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect('perusahaan');
 });
 
 Route::get('login', [LoginController::class, 'index'])->name('login');

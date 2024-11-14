@@ -123,9 +123,12 @@
                             <form wire:submit.prevent="addnomorsk()">
                                 <div class="mb-2">
                                     <label for="nomor">Masukan Nomor SK</label>
-                                    <input type="text" id="nomor" class="form-control @error('nomor') is-invalid @enderror" wire:model="nomor" required>
+                                    <input type="text" id="nomor" class="form-control @error('nomor') is-invalid @enderror" wire:model.live="nomor" required>
+                                    @error('nomor')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <button class="btn btn-primary" type="submit">Tambah SK</button>
+                                <button @click="add = false" class="btn btn-primary" type="submit" @error('nomor') disabled @enderror>Simpan Nomor SK</button>
                             </form>
                         </div>
                         <div class="list-group mt-4">
@@ -134,20 +137,28 @@
                                     $n['tahapan'] = App\Models\Tahapan::where('id', $n->tahapan_id)->first();
                                 @endphp
                                 <div class="list-group-item list-group-item-action" x-data="{ hapus: false }">
-                                    {{ $loop->iteration }}. Nomor SK : {{ $n->nomor }}
-                                    <a wire:navigate href="{{ url('nomorsk/' . $n->id) }}" class="ms-2"><i class="fas fa-edit"></i> Edit</a>
-                                    <span @click="hapus = !hapus" @click.outside="hapus = false" class="badge text-bg-danger hapus"><i class="fas fa-trash"></i> Hapus</span>
+                                    <div class="pt-3">
+                                        {{ $loop->iteration }}. Nomor SK : {{ $n->nomor }}
+                                    </div>
+                                    <span class="badge">
+                                        <a wire:navigate href="{{ url('nomorsk/' . $n->id) }}"><i class="fas fa-edit"></i> Edit</a> <br>
+                                        <span @click="hapus = !hapus" @click.outside="hapus = false" class="badge text-bg-danger hapus mt-2"><i class="fas fa-trash"></i> Hapus</span>
+                                    </span>
                                     <div x-show="hapus" class="position-absolute bg-warning p-2 rounded px-3" style="right: 10px;">
                                         <span class="hapus" wire:click="hapusnomorsk({{ $n->id }})">Ya, hapus</span> | <span class="hapus">Batal</span>
                                     </div>
                                 </div>
                                 <div class="ms-4 mt-1 mb-4">
-                                    <span class="badge text-bg-primary"> Masa Berlaku :
-                                        {{ date('d-m-Y', strtotime($n->tgl_mulai)) }} s.d.
-                                        {{ date('d-m-Y', strtotime($n->tgl_selesai)) }}
-                                    </span> <br>
-                                    Tahapan IUP : {{ $n['tahapan']['name_tahapan'] }} | Lokasi : {{ $n->kabupaten }}, {{ $n->kecamatan }}, {{ $n->desa }}
-                                    <br> Luas (HA) : {{ $n->luasha }} | Alamat sesuai SK : {{ $n->alamat }}
+                                    @if ($n->tgl_mulai == null)
+                                        <a wire:navigate href="{{ url('nomorsk/' . $n->id) }}" class="ms-2"><i class="fas fa-edit"></i> Edit SK untuk Melengkapi Data SK</a>
+                                    @else
+                                        <span class="badge text-bg-primary"> Masa Berlaku :
+                                            {{ date('d-m-Y', strtotime($n->tgl_mulai)) }} s.d.
+                                            {{ date('d-m-Y', strtotime($n->tgl_selesai)) }}
+                                        </span> <br>
+                                        Tahapan IUP : {{ $n['tahapan']['name_tahapan'] }} | Lokasi : {{ $n->kabupaten }}, {{ $n->kecamatan }}, {{ $n->desa }}
+                                        <br> Luas (HA) : {{ $n->luasha }} | Alamat sesuai SK : {{ $n->alamat }}
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
