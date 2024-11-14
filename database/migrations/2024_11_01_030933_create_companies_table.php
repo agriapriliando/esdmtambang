@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name_company');
             $table->string('name_kontak')->nullable();
             $table->string('kontak', 20)->nullable();
-            $table->string('email', 20)->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->longText('catatan')->nullable();
             $table->string('company_code')->nullable();
             $table->integer('limit_share')->default(0);

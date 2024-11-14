@@ -191,7 +191,8 @@
                                                                 <div class="mb-2">
                                                                     <label for="kontak">Kontak PIC</label>
                                                                     <div class="d-flex">
-                                                                        <input style="width: 200px" type="text" id="kontak" class="form-control" value="{{ $company->kontak }}" disabled>
+                                                                        <input style="width: 200px" type="text" id="kontak" class="form-control @error('kontak') is-invalid @enderror"
+                                                                            value="{{ $company->kontak }}" disabled>
                                                                         <a href="#" class="btn btn-success"><i class="fab fa-whatsapp"></i> </a>
                                                                     </div>
                                                                 </div>
@@ -199,12 +200,13 @@
                                                             <div class="col-12 col-md-6">
                                                                 <div class="mb-2">
                                                                     <label for="email">Email Perusahaan</label>
-                                                                    <input type="text" id="email" class="form-control" value="{{ $company->email }}" disabled>
+                                                                    <input type="text" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $company->email }}"
+                                                                        disabled>
                                                                 </div>
                                                                 <div class="mb-2">
                                                                     <label for="nosk">Catatan / Keterangan
                                                                         Tambahan</label>
-                                                                    <textarea name="nosk" id="nosk" rows="3" class="form-control" disabled></textarea>
+                                                                    <textarea name="nosk" id="nosk" rows="3" class="form-control @error('nosk') is-invalid @enderror" value="{{ $company->nosk }}" disabled></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 mt-4">

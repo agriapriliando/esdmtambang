@@ -10,11 +10,8 @@ use Livewire\Component;
 class CompanyEdit extends Component
 {
     public $id;
-    #[Validate('required|string')]
     public $name_company;
-    #[Validate('required|string')]
     public $name_kontak;
-    #[Validate('required|numeric|min:10')]
     public $kontak;
     public $email;
     public $catatan;
@@ -88,7 +85,12 @@ class CompanyEdit extends Component
 
     public function update()
     {
-        $this->validate();
+        $this->validate([
+            'name_company' => 'required',
+            'name_kontak' => 'required',
+            'kontak' => 'required|numeric|min:10',
+            'email' => 'required|email|unique:companies,email,' . $this->id,
+        ]);
         $company = Company::find($this->id);
         $data = [
             'name_company' => $this->name_company,
