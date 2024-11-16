@@ -31,6 +31,8 @@ class Docs extends Component
     public $visibilitas;
 
     public $search = '';
+    public $pilih_company_id;
+    public $page = 6;
 
     public function uploadfile()
     {
@@ -97,7 +99,13 @@ class Docs extends Component
     public function render()
     {
         return view('livewire.docs', [
-            'docs' => Doc::with('company')->search($this->search)->paginate(5),
+            'docs' => Doc::with('company')
+                ->search($this->search)
+                ->when($this->pilih_company_id, function ($query) {
+                    $query->where('company_id', $this->pilih_company_id);
+                })
+                ->paginate($this->page),
+            'docs_count' => Doc::count(),
             'companies' => Company::all()
         ]);
     }

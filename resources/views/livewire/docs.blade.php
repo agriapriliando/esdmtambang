@@ -48,7 +48,7 @@
                             <label for="perusahaan">Pilih Perusahaan</label>
                             <div wire:ignore>
                                 <select name="perusahaan" id="perusahaan" class="form-select @error('company_id') is-invalid @enderror" style="width: 100% !important;" required>
-                                    <option value="">=== Cari Perusahaan ===</option>
+                                    <option value="">=== Pilih Perusahaan ===</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}">{{ $company->name_company }}</option>
                                     @endforeach
@@ -147,6 +147,26 @@
                                 <input wire:model.live.debounce.350ms="search" type="text" class="form-control" placeholder="Cari File...">
                             </div>
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div wire:ignore>
+                                    <select id="pilih_company_id" class="form-select" aria-label="Default select example">
+                                        <option value="">Pilih Perusahaan</option>
+                                        @foreach ($companies as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name_company }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <select wire:model.live="page" name="company_id" class="form-select">
+                                    <option value="">Page</option>
+                                    <option value="8">8</option>
+                                    <option value="15">15</option>
+                                    <option value="{{ $docs_count }}">All</option>
+                                </select>
+                            </div>
+                        </div>
                         <div x-show="panduan" x-transition x-on:click.outside="panduan = false">
                             <hr>
                             <h4>Panduan :</h4>
@@ -224,6 +244,11 @@
             $('#perusahaan').on('change', function(e) {
                 var data = $('#perusahaan').select2("val");
                 @this.set('company_id', data);
+            });
+            $('#pilih_company_id').select2();
+            $('#pilih_company_id').on('change', function(e) {
+                var data = $('#pilih_company_id').select2("val");
+                @this.set('pilih_company_id', data);
             });
         });
     </script>
