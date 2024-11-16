@@ -20,10 +20,17 @@ class Company extends Model
         'password_active',
         'password',
         'is_active',
+        'jumlah_sk',
+        'jumlah_file',
     ];
 
     public function nomorsks()
     {
         return $this->hasMany(Nomorsk::class);
+    }
+
+    public function docs()
+    {
+        return $this->hasMany(Doc::class);
     }
 }

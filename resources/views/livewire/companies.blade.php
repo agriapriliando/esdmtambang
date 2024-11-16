@@ -5,112 +5,85 @@
                 <h3 class="fw-bold mb-3">Menu Profil Perusahaan</h3>
                 <h6 class="op-7 mb-2">Jumlah Perusahaan :
                     <span class="badge text-bg-primary">
-                        225 Terdaftar</span>
+                        {{ $companies->count() }} Perusahaan Terdaftar</span>
                 </h6>
             </div>
             <div class="ms-md-auto py-2 py-md-0">
-                <a href="#" class="btn btn-label-info btn-round me-2">Kelola File Berkas</a>
+                <a wire:navigate href="{{ route('berkas') }}" class="btn btn-label-info btn-round me-2">Kelola File Berkas</a>
                 <button x-on:click="formperusahaan = !formperusahaan" class="btn btn-primary btn-round" type="button">
                     <i class="fas fa-plus"></i> Tambah Perusahaan
                 </button>
-                <a href="#" class="btn btn-primary btn-round">Refresh</a>
+                <a wire:navigate href="{{ route('perusahaan') }}" class="btn btn-primary btn-round"><i class="fas fa-sync"></i> Refresh</a>
             </div>
         </div>
         <div class="row" x-show="formperusahaan" x-transition class="mt-3" x-on:click.outside="formperusahaan = false">
             <div class="col-12 card card-round">
+                <style>
+                    .tengah {
+                        width: 350px;
+                        z-index: 9999;
+                        bottom: 5%;
+                        right: 5%;
+                    }
+
+                    .hapus {
+                        cursor: pointer !important;
+                    }
+                </style>
+                @session('success')
+                    <div class="alert alert-success alert-dismissible fade show position-fixed tengah" role="alert">
+                        <strong>Berhasil</strong> {{ session('success') }}
+                        <div>
+                            <button type="button" class="btn-close ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                @endsession
                 <div class="card-body">
-                    <form x-data="{ jenisunggahan: '0' }">
-                        <div class="row">
-                            <div class="mb-2">
-                                <button x-on:click="formperusahaan = false" class="float-end btn btn-warning text-white" type="button">Tutup</button>
-                                <h5>Menu Tambah Perusahaan</h5>
-                            </div>
+                    <form wire:submit.prevent="addCompany()">
+                        <div class="row bg-white">
                             <div class="col-12 col-md-6">
                                 <div class="mb-2">
-                                    <label for="name">Nama Perusahaan</label>
-                                    <input type="text" id="name" class="form-control">
-                                    <small class="text-muted">
-                                        Menggunakan PT atau CV. Contoh : CV Anugerah Tambang Sentosa
-                                    </small>
+                                    <h5>Menu Tambah Perusahaan</h5>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="lokasi">Lokasi Kegiatan</label>
-                                    <div class="input-group mb-1 mt-1">
-                                        <span class="input-group-text">Kabupaten</span>
-                                        <input type="text" class="form-control" placeholder="Nama Kabupaten">
-                                    </div>
-                                    <div class="input-group mb-1 mt-1">
-                                        <span class="input-group-text">Kecamatan</span>
-                                        <input type="text" class="form-control" placeholder="Nama Kecamatan">
-                                    </div>
-                                    <div class="input-group mb-1 mt-1">
-                                        <span class="input-group-text">Desa/Kelurahan</span>
-                                        <input type="text" class="form-control" placeholder="Nama Desa">
-                                    </div>
-                                    <small class="text-muted">
-                                        Isian Lokasi bisa diisi lebih dari satu, pisahkan dengan tanda koma
-                                        (,)
-                                    </small>
+                                    <label for="name_company">Nama Perusahaan</label>
+                                    <input type="text" id="name_company" class="form-control @error('name_company') is-invalid @enderror" wire:model="name_company">
+                                    <small class="text-muted">Tanpa memakai Titik</small>
+                                    @error('name_company')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-2">
-                                    <label for="luas">Luas (HA) - </label>
-                                    <small class="text-muted">Contoh : 77,5</small>
-                                    <div class="input-group mb-3" style="width: 170px;">
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-text" id="basic-addon1">HA</span>
-                                    </div>
+                                    <label for="name_kontak">Nama PIC</label>
+                                    <input type="text" id="name_kontak" class="form-control @error('name_kontak') is-invalid @enderror" wire:model="name_kontak">
+                                    @error('name_kontak')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-2">
-                                    <label for="komoditas">Komoditas</label>
-                                    <select name="komoditas" id="komoditas" class="form-select">
-                                        <option value="">== Pilih Komoditas ==</option>
-                                        <option value="1">Kaolin</option>
-                                        <option value="2">Pasir Kuarsa</option>
-                                    </select>
+                                    <label for="kontak">Kontak PIC</label>
+                                    <input style="width: 200px" type="text" id="kontak" class="form-control @error('kontak') is-invalid @enderror" wire:model="kontak">
+                                    @error('kontak')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <div class="mb-2">
-                                    <label for="kontak">Kontak Person Perusahaan</label>
-                                    <input type="text" id="kontak" class="form-control">
-                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
                                 <div class="mb-2">
                                     <label for="email">Email Perusahaan</label>
-                                    <input type="text" id="email" class="form-control">
+                                    <input type="text" id="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email">
+                                    @error('email')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
+                                <div class="mb-2">
+                                    <label for="nosk">Catatan / Keterangan
+                                        Tambahan</label>
+                                    <textarea name="nosk" id="nosk" rows="3" class="form-control"></textarea>
+                                </div>
+                                <button class="btn btn-primary mt-3" type="submit">Simpan Perubahan</button>
+                                <button x-on:click="formperusahaan = false" class="float-end btn btn-warning text-white" type="button">Batal</button>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="mb-2">
-                                    <label for="nosk">Nomor SK</label>
-                                    <textarea name="nosk" id="nosk" cols="30" rows="4" class="form-control" placeholder="Contoh : 01082301005150001=08/04/2020=08/04/2023; 01082301005150001=08/04/2020=08/04/2023"></textarea>
-                                    <p>
-                                        Format Penulisan SK : NOMOR_SK=TGL_SK=TGL_Berakhir <br>
-                                        Format TGL : tgl/bln/tahun <br>
-                                        Contoh : 01082301005150001=08/04/2020=08/04/2023 <br>
-                                        Jika Nomor SK lebih dari satu, pisahkan dengan tanda titik koma (;)
-                                        <br>
-                                        Harap memperhatikan format penulisan, kesalahan penulisan
-                                        menyebabkan tanggal tidak terbaca oleh sistem
-                                    </p>
-                                </div>
-                                <div class="mb-2">
-                                    <label for="alamatsk">Alamat SK</label>
-                                    <input type="text" id="alamatsk" class="form-control">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="namadireksi">Nama Direksi</label>
-                                    <input type="text" id="namadireksi" class="form-control">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="modal">Modal Kerja</label>
-                                    <input type="number" id="modal" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <label for="nosk">Catatan / Keterangan Tambahan</label>
-                                <textarea name="nosk" id="nosk" cols="30" rows="4" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="d-grid mt-2">
-                            <button type="submit" class="btn btn-primary">Tambah Perusahaan</button>
                         </div>
                     </form>
                 </div>
@@ -168,8 +141,19 @@
                                                 {{ $company->name_company }}
                                                 <div class="mt-2">
                                                     <span class="badge text-bg-warning ps-2">
-                                                        Berkas Tersimpan : 78 File
-                                                    </span>
+                                                        Berkas Tersimpan : {{ $company->docs->count() }} File
+                                                    </span> <br>
+                                                    @foreach ($company->nomorsks as $nomorsk)
+                                                        @php
+                                                            $sisa_tahun = Carbon\Carbon::parse($nomorsk->tgl_selesai)->diffInYears(Carbon\Carbon::now());
+                                                        @endphp
+                                                        <span class="badge text-bg-warning ps-2">
+                                                            Nomor SK : {{ $nomorsk->nomor }} | {{ date('d-m-Y', strtotime($nomorsk->tgl_mulai)) }} s.d.
+                                                            {{ date('d-m-Y', strtotime($nomorsk->tgl_selesai)) }}
+                                                        </span> <span class="badge {{ $nomorsk->tgl_selesai > Carbon\Carbon::now() ? 'text-bg-success' : 'text-bg-danger' }} ps-2">
+                                                            {{ $nomorsk->tgl_selesai > Carbon\Carbon::now() ? 'Sisa ' . $sisa_tahun . ' Tahun' : 'SK Kadaluarsa' }}
+                                                        </span><br>
+                                                    @endforeach
                                                 </div>
                                                 <div>
                                                     <div x-show="modaldetail" class="overlay"></div>
@@ -265,7 +249,7 @@
                                                             terhapus, data tidak bisa dipulihkan/ dikembalikan
                                                         </p>
                                                         <div>
-                                                            <button type="button" class="btn btn-sm btn-danger">
+                                                            <button x-click="hapus = false" wire:click.prevent="deleteCompany({{ $company->id }})" type="button" class="btn btn-sm btn-danger">
                                                                 <i class="fa fa-trash"></i>
                                                                 Hapus Data
                                                             </button>

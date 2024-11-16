@@ -23,6 +23,8 @@ return new class extends Migration
             $table->boolean('password_active')->default(0);
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(1);
+            $table->integer('jumlah_sk')->default(0);
+            $table->integer('jumlah_file')->default(0);
             $table->timestamps();
         });
     }

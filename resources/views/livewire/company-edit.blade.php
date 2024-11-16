@@ -114,9 +114,11 @@
                         </form>
                     </div>
                     <hr>
-                    <div class="card-body" x-data="{ add: false }">
+                    <div class="card-body" x-data="{ add: false, list: false }">
                         <h5>Daftar Surat Keputusan
-                            <button @click="add = !add" class="btn btn-primary btn-sm float-end" type="button"><i class="fas fa-plus"></i> Tambah</button>
+                            <button @click="add = !add" class="btn btn-primary btn-sm float-end mx-1" type="button"><i class="fas fa-plus"></i> Tambah SK</button>
+                            <button @click="list = !list" class="btn btn-primary btn-sm float-end mx-1 {{ $nomorsks->count() == 0 ? 'd-none' : '' }}" type="button"><i class="fas fa-plus"></i>
+                                Lihat SK</button>
                         </h5>
                         <div x-show="add" @click.outside="add = false" x-transition>
                             <hr>
@@ -131,7 +133,7 @@
                                 <button @click="add = false" class="btn btn-primary" type="submit" @error('nomor') disabled @enderror>Simpan Nomor SK</button>
                             </form>
                         </div>
-                        <div class="list-group mt-4">
+                        <div class="list-group mt-4" x-show="list" @click.outside="list = false" x-transition>
                             @foreach ($nomorsks as $n)
                                 @php
                                     $n['tahapan'] = App\Models\Tahapan::where('id', $n->tahapan_id)->first();
