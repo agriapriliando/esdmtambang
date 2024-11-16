@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="page-inner" x-data="{ formupload: true }">
+    <div class="page-inner" x-data="{ formupload: false }">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
                 <h3 class="fw-bold mb-3">Menu File Berkas</h3>
@@ -144,7 +144,7 @@
                                 <button x-on:click="panduan = !panduan" class="btn btn-success btn-sm ms-2">
                                     <i class="fas fa-question"></i> Panduan
                                 </button>
-                                <input type="text" class="form-control" placeholder="Cari File...">
+                                <input wire:model.live.debounce.350ms="search" type="text" class="form-control" placeholder="Cari File...">
                             </div>
                         </div>
                         <div x-show="panduan" x-transition x-on:click.outside="panduan = false">
@@ -194,10 +194,10 @@
                                                     <span class="badge text-bg-success ps-2">
                                                         {{ $doc->company->name_company }}
                                                     </span>
-                                                    <span class="badge text-bg-warning ps-2">{{ $doc->type }}
-                                                    </span>
+                                                    <span class="badge text-bg-warning ps-2">{{ $doc->type }} | {{ round($doc->size / 1024) }} KB
+                                                    </span> <br>
                                                     <span class="badge text-bg-warning ps-2">
-                                                        Added by {{ $doc->upload_by }} - {{ Carbon\Carbon::parse($doc->created_at)->translatedFormat('d F Y H:i') }} Wib
+                                                        Added by {{ $doc->upload_by }} - {{ Carbon\Carbon::parse($doc->created_at)->translatedFormat('d/m/Y H:i') }} Wib
                                                     </span>
                                                 </div>
                                             </td>
@@ -205,6 +205,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="mx-4 mt-2">
+                                {{ $docs->links() }}
+
+                            </div>
                         </div>
                     </div>
                 </div>

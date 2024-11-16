@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
+use Livewire\WithPagination;
 
 
 class Docs extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
 
     #[Validate('required', message: 'Perusahaan tidak boleh kosong')]
     public $company_id;
@@ -28,6 +29,8 @@ class Docs extends Component
     #[Validate('url', message: 'Isian harus berbentuk URL atau Link Google Drive, atau sejenisnya')]
     public $file_link;
     public $visibilitas;
+
+    public $search = '';
 
     public function uploadfile()
     {
@@ -94,9 +97,8 @@ class Docs extends Component
     public function render()
     {
         return view('livewire.docs', [
-            'docs' => Doc::with('company')->get(),
+            'docs' => Doc::with('company')->search($this->search)->paginate(5),
             'companies' => Company::all()
-
         ]);
     }
 }
