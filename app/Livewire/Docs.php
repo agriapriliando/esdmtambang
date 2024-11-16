@@ -37,7 +37,7 @@ class Docs extends Component
                     $title = $file->getClientOriginalName();
                     $type = $file->getClientOriginalExtension();
                     $size = $file->getSize();
-                    $file_link = $file->store('berkas/' . $this->company_id . '/'); // upload file
+                    $file_link = $file->store('berkas/' . $this->company_id); // upload file
                     $data = [
                         'id' => Carbon::now()->timestamp . rand(11111, 99999),
                         'company_id' => $this->company_id,
@@ -81,6 +81,14 @@ class Docs extends Component
         }
         // return Storage::download($doc->file_link);
         return Response::download(storage_path('app/' . $doc->file_link), $doc->title);
+    }
+
+    public function delete($id)
+    {
+        $doc = Doc::findOrFail($id);
+        Storage::delete($doc->file_link);
+        $doc->delete();
+        session()->flash('success', 'Berhasil Hapus Dokumen');
     }
 
     public function render()

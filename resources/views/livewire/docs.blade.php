@@ -175,12 +175,19 @@
                                     @foreach ($docs as $doc)
                                         <tr>
                                             <td>
-                                                <div class="float-end">
+                                                <div class="float-end position-relative" x-data="{ hapus: false }">
                                                     <a target="_blank" href="{{ route('download', $doc->id) }}">
                                                         <span class="btn btn-primary">
                                                             <i class="fa fa-download"> Unduh</i>
                                                         </span>
                                                     </a>
+                                                    <button x-on:click="hapus = !hapus" class="btn btn-danger hapus"><i class="fa fa-trash"></i> Hapus</button>
+                                                    <div x-show="hapus" x-transition x-on:click.outside="hapus = false" class="position-absolute top-0 end-0">
+                                                        <div class="d-flex">
+                                                            <div @click="hapus = false" wire:click="delete({{ $doc->id }})" class="bg-warning rounded hover p-2">Ya, Hapus</div> |
+                                                            <div @click="hapus = false" class="bg-warning rounded hover p-2">Batal</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 {{ $doc->title }}
                                                 <div class="mt-2">
