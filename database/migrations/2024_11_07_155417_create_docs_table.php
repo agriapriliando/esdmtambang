@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('docs', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->foreignId('company_id')->constrained();
             $table->string('title');
             $table->string('type', 10); //format file
-            $table->integer('size');
-            $table->string('file');
+            $table->integer('size')->default(0);
+            $table->longText('file_link');
             $table->string('upload_by', 30);
+            $table->boolean('visibilitas')->default(0); // default o, akses harus login
             $table->timestamps();
         });
     }

@@ -16,11 +16,23 @@ class DocSeeder extends Seeder
     {
         DB::table('docs')->insert([
             [
+                'id' => Carbon::now()->timestamp . rand(11111, 99999),
                 'company_id' => 1,
                 'title' => 'KTP Direksi',
                 'type' => 'jpg',
                 'size' => 1024,
-                'file' => 'KTP.pdf',
+                'file_link' => '0928348.pdf',
+                'upload_by' => 'Adi Nugroho',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id' => Carbon::now()->timestamp . rand(11111, 99999),
+                'company_id' => 1,
+                'title' => 'Dokumen Foto Lapangan',
+                'type' => 'zip',
+                'size' => 1024,
+                'file_link' => '234398734.zip',
                 'upload_by' => 'Adi Nugroho',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
