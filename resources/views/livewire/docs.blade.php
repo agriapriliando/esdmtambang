@@ -150,7 +150,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <div wire:ignore>
-                                    <select id="pilih_company_id" class="form-select" aria-label="Default select example">
+                                    <select onchange="getData()" id="pilih_company_id" class="form-select" aria-label="Default select example">
                                         <option value="">Pilih Perusahaan</option>
                                         @foreach ($companies as $c)
                                             <option value="{{ $c->id }}">{{ $c->name_company }}</option>

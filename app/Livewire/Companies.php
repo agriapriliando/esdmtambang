@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class Companies extends Component
 {
-    #[Validate('required|unique:companies,name_company')]
+    #[Validate('required|unique:companies,name_company|regex:/^[\pL\s]+$/u')]
     public $name_company;
     #[Validate('required')]
     public $name_kontak;
@@ -24,6 +24,10 @@ class Companies extends Component
     public $password_active;
     public $password;
     public $is_active;
+
+    public $search;
+
+    public $page = 10;
 
     public function addCompany()
     {
@@ -55,7 +59,9 @@ class Companies extends Component
     public function render()
     {
         return view('livewire.companies', [
-            'companies' => Company::with('nomorsks', 'docs')->get(),
+            'companies' => Company::with('nomorsks', 'docs')
+                ->search($this->search)
+                ->paginate($this->page),
         ]);
     }
 }

@@ -80,14 +80,14 @@
                             <h4 class="text-section">Menu</h4>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('berkas') }}">
+                            <a wire:navigate href="{{ url('berkas') }}">
                                 <i class="fas fa-file"></i>
                                 <p>Daftar File Berkas</p>
                                 <span class="badge badge-secondary d-none">1</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('perusahaan') }}">
+                            <a wire:navigate href="{{ url('perusahaan') }}">
                                 <i class="fas fa-file"></i>
                                 <p>Daftar Perusahaan</p>
                                 <span class="badge badge-secondary d-none">1</span>

@@ -51,6 +51,9 @@ class CompanyEdit extends Component
             'region_id' => "62",
             'provinsi' => "KALIMANTAN TENGAH",
         ]);
+        Company::whereId($this->id)->update([
+            'jumlah_sk' => Nomorsk::where('company_id', $this->id)->count(),
+        ]);
 
         session()->flash('success', 'Nomor SK Berhasil Ditambahkan');
         $this->nomor = '';
@@ -59,6 +62,9 @@ class CompanyEdit extends Component
     public function hapusnomorsk($id)
     {
         Nomorsk::find($id)->delete();
+        Company::whereId($this->id)->update([
+            'jumlah_sk' => Nomorsk::where('company_id', $this->id)->count(),
+        ]);
         session()->flash('success', 'Nomor SK Berhasil Dihapus');
     }
 

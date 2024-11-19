@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="name_company">Nama Perusahaan</label>
-                                    <input type="text" id="name_company" class="form-control @error('name_company') is-invalid @enderror" wire:model="name_company">
+                                    <input type="text" id="name_company" class="form-control @error('name_company') is-invalid @enderror" wire:model.live.debounce.350ms="name_company">
                                     <small class="text-muted">Tanpa memakai Titik</small>
                                     @error('name_company')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -82,7 +82,7 @@
                                     <textarea name="nosk" id="nosk" rows="3" class="form-control"></textarea>
                                 </div>
                                 <button class="btn btn-primary mt-3" type="submit">Simpan Perubahan</button>
-                                <button x-on:click="formperusahaan = false" class="float-end btn btn-warning text-white" type="button">Batal</button>
+                                <button x-on:click="formperusahaan = false" class="float-end btn btn-warning text-white" type="button">Tutup</button>
                             </div>
                         </div>
                     </form>
@@ -99,7 +99,7 @@
                                 <button x-on:click="panduan = !panduan" class="btn btn-success btn-sm ms-2">
                                     <i class="fas fa-question"></i> Panduan
                                 </button>
-                                <input type="text" class="form-control" placeholder="Cari Perusahaan...">
+                                <input wire:model.live.debounce.350ms="search" type="text" class="form-control" placeholder="Cari Perusahaan...">
                             </div>
                         </div>
                         <div x-show="panduan" x-transition x-on:click.outside="panduan = false">
@@ -120,7 +120,7 @@
                             <table class="table align-items-center mb-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">Nama</th>
+                                        <th scope="col">Nama Perusahaan | Nomor SK</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,16 +141,17 @@
                                                 {{ $company->name_company }}
                                                 <div class="mt-2">
                                                     <span class="badge text-bg-warning ps-2">
-                                                        Berkas Tersimpan : {{ $company->docs->count() }} File
+                                                        Berkas : {{ $company->docs->count() }} File | SK : {{ $company->nomorsks->count() }} Nomor
                                                     </span> <br>
                                                     @foreach ($company->nomorsks as $nomorsk)
                                                         @php
                                                             $sisa_tahun = Carbon\Carbon::parse($nomorsk->tgl_selesai)->diffInYears(Carbon\Carbon::now());
                                                         @endphp
-                                                        <span class="badge text-bg-warning ps-2">
-                                                            Nomor SK : {{ $nomorsk->nomor }} | {{ date('d-m-Y', strtotime($nomorsk->tgl_mulai)) }} s.d.
+                                                        <span class="badge text-bg-warning ps-2" style="text-align: left !important">
+                                                            Nomor SK : {{ $nomorsk->nomor }} <br> {{ date('d-m-Y', strtotime($nomorsk->tgl_mulai)) }} s.d.
                                                             {{ date('d-m-Y', strtotime($nomorsk->tgl_selesai)) }}
-                                                        </span> <span class="badge {{ $nomorsk->tgl_selesai > Carbon\Carbon::now() ? 'text-bg-success' : 'text-bg-danger' }} ps-2">
+                                                        </span>
+                                                        <span class="badge {{ $nomorsk->tgl_selesai > Carbon\Carbon::now() ? 'text-bg-success' : 'text-bg-danger' }} ps-2">
                                                             {{ $nomorsk->tgl_selesai > Carbon\Carbon::now() ? 'Sisa ' . $sisa_tahun . ' Tahun' : 'SK Kadaluarsa' }}
                                                         </span><br>
                                                     @endforeach
@@ -177,7 +178,10 @@
                                                                     <div class="d-flex">
                                                                         <input style="width: 200px" type="text" id="kontak" class="form-control @error('kontak') is-invalid @enderror"
                                                                             value="{{ $company->kontak }}" disabled>
-                                                                        <a href="#" class="btn btn-success"><i class="fab fa-whatsapp"></i> </a>
+                                                                        <div>
+                                                                            <a target="_blank" href="https://api.whatsapp.com/send/?phone={{ $company->kontak }}" class="btn btn-success"><i
+                                                                                    class="fab fa-whatsapp"></i> </a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
