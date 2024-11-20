@@ -131,7 +131,7 @@
                 <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
                         <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex" x-data="{ searchform: false }" style="width: 100% !important;">
-                            <div class="input-group">
+                            <div class="input-group d-none">
                                 <div class="input-group-prepend">
                                     <button type="submit" class="btn btn-search pe-1">
                                         <i class="fa fa-search search-icon"></i>
@@ -164,7 +164,7 @@
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                             <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">
+                                <a class="nav-link dropdown-toggle d-none" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">
                                     <i class="fa fa-search"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-search animated fadeIn">
