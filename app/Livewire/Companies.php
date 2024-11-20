@@ -7,9 +7,12 @@ use App\Models\Doc;
 use App\Models\Nomorsk;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Companies extends Component
 {
+    use WithPagination;
+
     #[Validate('required|unique:companies,name_company|regex:/^[\pL\s]+$/u')]
     public $name_company;
     #[Validate('required')]

@@ -43,7 +43,7 @@ class Docs extends Component
                 foreach ($this->file as $file) {
                     $title = $file->getClientOriginalName();
                     $type = $file->getClientOriginalExtension();
-                    $size = $file->getSize();
+                    $size = round($file->getSize() / 1024);
                     $file_link = $file->store('berkas/' . $this->company_id); // upload file
                     $data = [
                         'id' => Carbon::now()->timestamp . rand(11111, 99999),
@@ -115,6 +115,8 @@ class Docs extends Component
                 ->paginate($this->page),
             'docs_count' => Doc::count(),
             'companies' => Company::where('name_company', 'like', '%' . $this->company_search . '%')->get(),
+            'companies_lst' => Company::orderBy('name_company')->get(),
+            'all_size' => Doc::sum('size'),
         ]);
     }
 }

@@ -116,6 +116,9 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
+                            <div class="mx-4 mt-2">
+                                {{ $companies->links() }}
+                            </div>
                             <!-- Projects table -->
                             <table class="table align-items-center mb-0">
                                 <thead class="thead-light">
@@ -268,6 +271,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="mx-4 mt-2">
+                                {{ $companies->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
