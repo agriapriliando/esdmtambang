@@ -5,6 +5,7 @@ use App\Livewire\Companies;
 use App\Livewire\CompanyEdit;
 use App\Livewire\Docs;
 use App\Livewire\NomorskEdit;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -20,25 +21,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('perusahaan');
+    return redirect('berkas');
 });
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('logout', function () {
-    Http::post('http://127.0.0.1:8000/api/logout');
+    Http::post('http://127.0.0.1:8020/api/logout');
+    Auth::logout();
+    session()->invalidate();
+    session()->regenerateToken();
     return redirect('login')->with('success', 'Anda Berhasil Logout');
 });
-Route::get('perusahaan', Companies::class)->name('perusahaan');
-Route::get('perusahaan/{id}', CompanyEdit::class);
-Route::get('nomorsk/{id}', NomorskEdit::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('perusahaan', Companies::class)->name('perusahaan')->middleware('auth');
+    Route::get('perusahaan/{id}', CompanyEdit::class)->middleware('auth');
+    Route::get('nomorsk/{id}', NomorskEdit::class)->middleware('auth');
 
+    Route::get('berkas', Docs::class)->name('berkas');
 
-Route::get('berkas', Docs::class)->name('berkas');
-
-Route::get('download/{id}', [Docs::class, 'download'])->name('download');
-
-
-// Route::get('berkas', function () {
-//     return view('berkas');
-// })->name('berkas');
+    Route::get('download/{id}', [Docs::class, 'download'])->name('download');
+});

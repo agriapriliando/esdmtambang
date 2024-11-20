@@ -158,14 +158,20 @@
                             <h5 class="card-title">Login</h5>
                             <h6 class="card-subtitle mb-4 text-body-secondary">Bidang Pertambangan ESDM Kalteng</h6>
                             <hr>
-                            @session('success')
+                            @session('user')
                                 <div class="alert rounded bg-success alert-dismissible fade show" role="alert">
                                     <strong>Terima Kasih {{ session('user')['name'] }}, </strong> {{ session('success') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endsession
+                            @session('success')
+                                <div class="alert rounded text-bg-success alert-dismissible fade show" role="alert">
+                                    <strong>Terima Kasih, </strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endsession
                             @session('error')
-                                <div class="alert rounded bg-danger text-white alert-dismissible fade show" role="alert">
+                                <div class="alert rounded text-bg-danger alert-dismissible fade show" role="alert">
                                     <strong>Perhatian!</strong> {{ session('error') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
@@ -176,7 +182,7 @@
                                     @method('POST')
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username</label>
-                                        <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Username">
+                                        <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Username" autocomplete="off">
                                         @error('username')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -186,8 +192,8 @@
                                     <div>
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group mb-3" x-data="{ pass: false }">
-                                            <input name="password" :type="pass ? 'password' : 'text'" class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                                                id="password">
+                                            <input name="password" :type="pass ? 'password' : 'text'" class="form-control @error('password') is-invalid @enderror" placeholder="Password" id="password"
+                                                autocomplete="off">
                                             <span class="input-group-text hover"><i x-on:click="pass = !pass" :class="pass ? 'fa fa-eye-slash' : 'fa fa-eye'"></i></span>
                                             @error('password')
                                                 <div class="invalid-feedback">
@@ -203,8 +209,8 @@
                                 </form>
                             </div>
                             <div class="text-center mt-4">
-                                Aplikasi Pendataan dan Pelayanan ESDM Kalteng<br>2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                                <a target="_blank" href="#">Ditaria Berkat Harati</a>.
+                                Aplikasi Pendataan ESDM Kalteng<br>2024, made with <i class="fa fa-heart heart text-danger"></i> by
+                                <a target="_blank" href="https://www.ditaria.com/">Ditaria Berkat Harati</a>.
                             </div>
                         </div>
                     </div>

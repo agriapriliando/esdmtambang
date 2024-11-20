@@ -20,10 +20,14 @@ class LoginController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-        $response = Http::post('http://127.0.0.1:8000/api/login', $datalogin);
+        try {
+            $response = Http::timeout(3)->post('http://127.0.0.1:8020/api/login', $datalogin);
+        } catch (\Exception $e) {
+            return redirect('login')->with('error', 'Koneksi ke Aplikasi MINERS');
+        }
         $response = json_decode($response, true);
         if (array_key_exists('user', $response)) {
-            if ($response['user']['role'] == 'admin') { //admin evaluator
+            if ($response['user']['role'] != 'pemohon' || $response['user']['role'] != 'newuser') { //admin evaluator
                 $user = User::updateOrCreate(
                     ['email' => $response['user']['email']],
                     [
@@ -42,7 +46,7 @@ class LoginController extends Controller
                 session()->put('user', $response['user']);
                 return redirect()->route('berkas')->with('success', 'Hai ' . session('user')['name']);
             } else {
-                return redirect('login')->with('error', 'Akun anda bukan admin/operator');
+                return redirect('login')->with('error', 'Akun anda bukan Admin MINERS');
             }
         } else {
             return redirect('login')->with('error', $response['message']);

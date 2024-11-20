@@ -66,7 +66,7 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item">
+                        <li class="nav-item d-none">
                             <a href="{{ url('/') }}">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
@@ -91,6 +91,12 @@
                                 <i class="fas fa-file"></i>
                                 <p>Daftar Perusahaan</p>
                                 <span class="badge badge-secondary d-none">1</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('logout') }}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <p>Logout</p>
                             </a>
                         </li>
                     </ul>
@@ -177,7 +183,7 @@
                                     <i class="fa fa-user"></i>
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span>
-                                        <span class="fw-bold">Agri Apriliando</span>
+                                        <span class="fw-bold">{{ Auth::user()->name }}</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -188,10 +194,9 @@
                                                     <img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded" />
                                                 </div>
                                                 <div class="u-text">
-                                                    <h4>Agri Apriliando</h4>
-                                                    <p class="text-muted">hello@example.com</p>
-                                                    <a href="#" class="btn btn-xs btn-secondary btn-sm">Profile</a>
-                                                    <a href="#" class="btn btn-xs btn-warning btn-sm">Logout</a>
+                                                    <h4>{{ Auth::user()->name }}</h4>
+                                                    <p class="text-muted">{{ Auth::user()->email }}</p>
+                                                    <a href="{{ url('logout') }}" class="btn btn-xs btn-warning btn-sm">Logout</a>
                                                 </div>
                                             </div>
                                         </li>
