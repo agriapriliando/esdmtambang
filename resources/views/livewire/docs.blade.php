@@ -149,17 +149,33 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <div wire:ignore>
-                                    <select onchange="getData()" id="pilih_company_id" class="form-select" aria-label="Default select example">
-                                        <option value="">Pilih Perusahaan</option>
+                                <style>
+                                    .list-group {
+                                        max-height: 100px;
+                                        margin-bottom: 10px;
+                                        overflow: scroll;
+                                        overflow-x: hidden;
+                                        width: 280px;
+                                        -webkit-overflow-scrolling: touch;
+                                    }
+                                </style>
+                                <div x-data="{ company_list: false, set_disabled: false }" class="position-relative">
+                                    <input x-on:click="company_list = !company_list" type="text" class="form-control" wire:model.live="company_search" placeholder="Pilih Perusahaan"
+                                        :disabled="set_disabled">
+                                    <div x-show="company_list" x-transition x-on:click.outside="company_list = false" class="list-group position-absolute">
                                         @foreach ($companies as $c)
-                                            <option value="{{ $c->id }}">{{ $c->name_company }}</option>
+                                            <span @click="$wire.getPilihCompanyId({{ $c->id }}); $wire.company_search = '{{ $c->name_company }}'; set_disabled = true; company_list = false"
+                                                class="list-group-item list-group-item-action hover">{{ $c->name_company }}</span>
                                         @endforeach
-                                    </select>
+                                    </div>
+                                    <span style="font-size: 17px" class="position-absolute end-0 top-0 p-2 hover me-2"
+                                        x-on:click="company_list = false; set_disabled = false;
+                                    $wire.company_search = '';
+                                    $wire.getPilihCompanyId();">X</span>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <select wire:model.live="page" name="company_id" class="form-select">
+                                <select wire:model.live="page" name="company_id" class="form-select mt-1">
                                     <option value="">Page</option>
                                     <option value="8">8</option>
                                     <option value="15">15</option>
@@ -236,20 +252,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#perusahaan').select2();
-            $('#perusahaan').on('change', function(e) {
-                var data = $('#perusahaan').select2("val");
-                @this.set('company_id', data);
-            });
-            $('#pilih_company_id').select2();
-            $('#pilih_company_id').on('change', function(e) {
-                var data = $('#pilih_company_id').select2("val");
-                @this.set('pilih_company_id', data);
-            });
-        });
-    </script>
-@endpush

@@ -34,6 +34,8 @@ class Docs extends Component
     public $pilih_company_id;
     public $page = 6;
 
+    public $company_search;
+
     public function uploadfile()
     {
         try {
@@ -96,6 +98,12 @@ class Docs extends Component
         session()->flash('success', 'Berhasil Hapus Dokumen');
     }
 
+    public function getPilihCompanyId($id = null)
+    {
+        // $this->resetPage();
+        $this->pilih_company_id = $id;
+    }
+
     public function render()
     {
         return view('livewire.docs', [
@@ -106,7 +114,7 @@ class Docs extends Component
                 })
                 ->paginate($this->page),
             'docs_count' => Doc::count(),
-            'companies' => Company::all()
+            'companies' => Company::where('name_company', 'like', '%' . $this->company_search . '%')->get(),
         ]);
     }
 }
