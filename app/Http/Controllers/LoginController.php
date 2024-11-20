@@ -21,7 +21,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         try {
-            $response = Http::timeout(3)->post('http://127.0.0.1:8020/api/login', $datalogin);
+            $response = Http::timeout(10)->post('https://dev.ditaria.com/api/login', $datalogin);
         } catch (\Exception $e) {
             return redirect('login')->with('error', 'Koneksi ke Aplikasi MINERS');
         }

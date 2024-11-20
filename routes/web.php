@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('logout', function () {
-    Http::post('http://127.0.0.1:8020/api/logout');
+    Http::post('https://dev.ditaria.com/api/logout');
     Auth::logout();
     session()->invalidate();
     session()->regenerateToken();
